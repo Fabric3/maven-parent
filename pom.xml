@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
  Fabric3
- Copyright (c) 2009 Metaform Systems
+ Copyright (c) 2009-2013 Metaform Systems
 
 Fabric3 is licensed under modified terms of the GNU General
 Public License. See the accompanying license file for details.
@@ -55,12 +55,13 @@ Public License. See the accompanying license file for details.
         </extensions>
     </build>
 
-    <scm>
-        <connection>scm:svn:http://svn.codehaus.org/fabric3/parent-pom/trunk</connection>
-        <developerConnection>scm:svn:https://svn.codehaus.org/fabric3/parent-pom/trunk</developerConnection>
-        <url>http://svn.fabric3.codehaus.org/browse/fabric3/parent-pom/trunk</url>
-    </scm>
-       
+	<scm>
+        <connection>scm:git:git@github.com:Fabric3/maven-parent.git</connection>
+        <developerConnection>scm:git:git@github.com:Fabric3/maven-parent.git</developerConnection>
+        <url>http://github.com/Fabric3/maven-parent</url>
+        <tag>HEAD</tag>
+	</scm>
+
     <distributionManagement>
         <repository>
             <id>dav.codehaus.org</id>
