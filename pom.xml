@@ -19,7 +19,7 @@ To determine availability of new plugin versions, run:
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.codehaus.fabric3</groupId>
     <artifactId>parent</artifactId>
-    <version>8</version>
+    <version>9-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Fabric3 Project Parent</name>
     <description>Parent POM defining global repository settings.</description>
@@ -47,7 +47,7 @@ To determine availability of new plugin versions, run:
         <connection>scm:git:git@github.com:Fabric3/maven-parent.git</connection>
         <developerConnection>scm:git:git@github.com:Fabric3/maven-parent.git</developerConnection>
         <url>http://github.com/Fabric3/maven-parent</url>
-        <tag>parent-8</tag>
+        <tag>HEAD</tag>
 	</scm>
 
     <issueManagement>
