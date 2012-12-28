@@ -6,6 +6,14 @@
 Fabric3 is licensed under modified terms of the GNU General
 Public License. See the accompanying license file for details.
 
+==============================================================
+
+Parent POM for Fabric3 repos.
+
+To determine availability of new plugin versions, run:
+
+ mvn versions:display-plugin-updates
+ 
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
@@ -14,7 +22,7 @@ Public License. See the accompanying license file for details.
     <version>8-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Fabric3 Project Parent</name>
-    <description>Parent POM defining project wide settings.</description>
+    <description>Parent POM defining global repository settings.</description>
 
     <prerequisites>
         <maven>3.0.4</maven>
@@ -30,10 +38,17 @@ Public License. See the accompanying license file for details.
     <licenses>
         <license>
             <name>Fabric3 License</name>
-            <url>http://www.fabric3.org/f3license.html</url>
+            <url>http://www.fabric3.org/license.html</url>
             <distribution>repo</distribution>
         </license>
     </licenses>
+
+	<scm>
+        <connection>scm:git:git@github.com:Fabric3/maven-parent.git</connection>
+        <developerConnection>scm:git:git@github.com:Fabric3/maven-parent.git</developerConnection>
+        <url>http://github.com/Fabric3/maven-parent</url>
+        <tag>HEAD</tag>
+	</scm>
 
     <issueManagement>
         <system>jira</system>
@@ -45,6 +60,137 @@ Public License. See the accompanying license file for details.
     </properties>
 
     <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.0</version>
+                    <configuration>
+                        <source>1.5</source>
+                        <target>1.5</target>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.13</version>
+                    <configuration>
+                        <includes>
+                            <include>**/*TestCase.java</include>
+                        </includes>
+                        <reportFormat>brief</reportFormat>
+                        <useFile>false</useFile>
+                        <forkMode>once</forkMode>
+                        <argLine>-ea</argLine>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>2.2.1</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>2.4</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>2.9</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <quiet>true</quiet>
+                        <links>
+                            <link>http://download.oracle.com/javase/6/docs/api/</link>
+                        </links>
+                        <header>${project.name}</header>
+                        <bottom><![CDATA[Copyright &copy; {inceptionYear}-{currentYear} Metaform Systems.]]></bottom>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>1.4</version>
+                    <executions>
+                        <execution>
+                            <id>sign-artifacts</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>sign</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.felix</groupId>
+                    <artifactId>maven-bundle-plugin</artifactId>
+                    <version>2.3.5</version>
+                    <extensions>true</extensions>
+                    <configuration>
+                        <instructions>
+                            <Private-Package/>
+                        </instructions>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>2.4</version>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>single</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <descriptors>
+                            <descriptor>assembly.xml</descriptor>
+                        </descriptors>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>2.4</version>
+                </plugin>
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.apache.maven.plugins</groupId>
+										<artifactId>maven-plugin-plugin</artifactId>
+										<versionRange>[2.2,)</versionRange>
+										<goals>
+											<goal>descriptor</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<execute />
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+            </plugins>
+        </pluginManagement>
         <extensions>
             <!-- WebDAV extension to support deployment to Codehaus repositories -->
             <extension>
@@ -54,13 +200,6 @@ Public License. See the accompanying license file for details.
             </extension>
         </extensions>
     </build>
-
-	<scm>
-        <connection>scm:git:git@github.com:Fabric3/maven-parent.git</connection>
-        <developerConnection>scm:git:git@github.com:Fabric3/maven-parent.git</developerConnection>
-        <url>http://github.com/Fabric3/maven-parent</url>
-        <tag>HEAD</tag>
-	</scm>
 
     <distributionManagement>
         <repository>
@@ -127,4 +266,22 @@ Public License. See the accompanying license file for details.
         </pluginRepository>
     </pluginRepositories>
 
+    <reporting>
+         <plugins>
+             <plugin>
+                 <groupId>org.codehaus.mojo</groupId>
+                 <artifactId>versions-maven-plugin</artifactId>
+                 <version>2.0</version>
+                 <reportSets>
+                     <reportSet>
+                         <reports>
+                             <report>dependency-updates-report</report>
+                             <report>plugin-updates-report</report>
+                             <report>property-updates-report</report>
+                         </reports>
+                     </reportSet>
+                </reportSets>
+             </plugin>
+         </plugins>
+    </reporting>
 </project>
